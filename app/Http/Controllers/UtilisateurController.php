@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cour;
-use App\Http\Requests\StoreCourRequest;
-use App\Http\Requests\UpdateCourRequest;
+use App\Models\Utilisateur;
+use App\Http\Requests\StoreutilisateurRequest;
+use App\Http\Requests\UpdateutilisateurRequest;
 
-class CourController extends Controller
+class UtilisateurController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $user=Utilisateur::all();
+        return response()->json($user);
     }
 
     /**
@@ -27,15 +28,16 @@ class CourController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCourRequest $request)
+    public function store(StoreutilisateurRequest $request)
     {
-        //
+       $user=Utilisateur::create($request->validated());
+        return response()->json($user);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Cour $cour)
+    public function show(Utilisateur $utilisateur)
     {
         //
     }
@@ -43,7 +45,7 @@ class CourController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Cour $cour)
+    public function edit(Utilisateur $utilisateur)
     {
         //
     }
@@ -51,7 +53,7 @@ class CourController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCourRequest $request, Cour $cour)
+    public function update(UpdateutilisateurRequest $request, utilisateur $utilisateur)
     {
         //
     }
@@ -59,7 +61,7 @@ class CourController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cour $cour)
+    public function destroy(Utilisateur $utilisateur)
     {
         //
     }

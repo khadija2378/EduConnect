@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\UtilisateurController;
+use App\Models\Course;
+use App\Models\Utilisateur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +21,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/user',[UtilisateurController::class,'index']);
+Route::post('/user',[UtilisateurController::class,'store']);
+Route::get('/course',[CourseController::class,'index']);
+Route::post('/course',[CourseController::class,'store']);
