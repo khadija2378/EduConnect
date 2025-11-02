@@ -14,6 +14,6 @@ protected $fillable = [
     ];
     use HasFactory;
     public function utilisateur() {
-    return $this->belongsTo(Utilisateur::class);
+    return $this->belongsTo(Utilisateur::class,'teacher_id');
 }
 }

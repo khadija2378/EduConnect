@@ -2,23 +2,34 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Hash;
 
-class Utilisateur extends Model
+class Utilisateur extends Authenticatable
 {
+    use HasApiTokens, HasFactory, Notifiable;
+
     protected $fillable = [
         'name',
         'email',
         'password',
         'role'
     ];
-    use HasFactory;
-    public function course(){
-        return $this->hasMany(Course::class);
-    }
-    public function inscription(){
+    protected $hidden = [
+        'password',
+    ];
 
+     public function courses(){
+       return $this->hasMany(Course::class,'teacher_id');
+     }
+    // public function inscription(){
+
+    // }
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
     }
 }

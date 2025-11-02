@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
@@ -13,7 +14,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-         $course= Course::all();
+        $course=Auth::user()->courses;
+         
         return response()->json($course);
     }
 
@@ -30,7 +32,10 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-      $course= Course::create($request->validated());
+        $userId=Auth::user()->id;
+        $valideCourse=$request->validated();
+        $valideCourse['teacher_id']=$userId;
+       $course= Course::create($valideCourse);
         return response()->json($course);
     }
 

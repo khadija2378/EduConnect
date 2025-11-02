@@ -22,7 +22,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/user',[UtilisateurController::class,'index']);
-Route::post('/user',[UtilisateurController::class,'store']);
-Route::get('/course',[CourseController::class,'index']);
-Route::post('/course',[CourseController::class,'store']);
+
+Route::post('/register',[UtilisateurController::class,'register']);
+Route::post('/login',[UtilisateurController::class,'login']);
+Route::post('/logout',[UtilisateurController::class,'logout'])->middleware('auth:sanctum');
+
+Route::middleware('auth:sanctum', 'role:teacher')->group(function(){
+    
+Route::get('/courses',[CourseController::class,'index']);
+Route::post('/courses',[CourseController::class,'store']);
+Route::put('/courses/{id} ',[CourseController::class,'update']);
+Route::delete('/courses/{id} ',[CourseController::class,'destroy']);
+
+});

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Utilisateur;
 use App\Http\Requests\StoreutilisateurRequest;
 use App\Http\Requests\UpdateutilisateurRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UtilisateurController extends Controller
 {
@@ -28,11 +30,28 @@ class UtilisateurController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreutilisateurRequest $request)
+    public function register(StoreutilisateurRequest $request)
     {
        $user=Utilisateur::create($request->validated());
         return response()->json($user);
     }
+    public function login(StoreutilisateurRequest $request)
+    {
+       $request->validated();
+       if (!Auth::attempt($request->only('email', 'password'))) {
+        return response()->json(['message' => 'Invalid email or password'], 401);
+    }
+    $user=Utilisateur::where('email', $request->email)->first();
+    $token=$user->createToken('auth_token')->plainTextToken;
+     return response()->json(['message'=>'login is valide',
+                               'User'=>$user,
+                               'token'=>$token], 201);
+    }
+    // public function logout(Request $request){
+    //    $request->user()->currentAccessToken()->delete();
+    //     return response()->json(['messege'=>'logout is valide']);
+
+    // }
 
     /**
      * Display the specified resource.

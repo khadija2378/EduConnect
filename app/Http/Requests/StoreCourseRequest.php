@@ -23,8 +23,8 @@ class StoreCourseRequest extends FormRequest
     {
         return [
             'titre'=>'required|max:6',
-            'description'=>'required|min:5',
-            'teacher_id'=>'required|exists:utilisateurs,id'
+            'description'=>'required|min:5'
+
         ];
     }
 }
