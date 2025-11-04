@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\UtilisateurController;
 use App\Models\Course;
 use App\Models\Utilisateur;
@@ -28,10 +29,15 @@ Route::post('/login',[UtilisateurController::class,'login']);
 Route::post('/logout',[UtilisateurController::class,'logout'])->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum', 'role:teacher')->group(function(){
-    
+
 Route::get('/courses',[CourseController::class,'index']);
 Route::post('/courses',[CourseController::class,'store']);
 Route::put('/courses/{id} ',[CourseController::class,'update']);
 Route::delete('/courses/{id} ',[CourseController::class,'destroy']);
 
 });
+Route::post('/course',[InscriptionController::class,'store'])->middleware('auth:sanctum', 'role:student');
+Route::get('/myCourses',[InscriptionController::class,'index'])->middleware('auth:sanctum', 'role:student');
+
+Route::get('/users',[UtilisateurController::class,'index'])->middleware('auth:sanctum', 'role:admin');
+Route::post('/users',[UtilisateurController::class,'register'])->middleware('auth:sanctum', 'role:admin');

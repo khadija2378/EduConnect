@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\inscription;
 use App\Http\Requests\StoreinscriptionRequest;
 use App\Http\Requests\UpdateinscriptionRequest;
+use App\Models\Inscription as ModelsInscription;
+use Illuminate\Support\Facades\Auth;
 
 class InscriptionController extends Controller
 {
@@ -13,7 +15,8 @@ class InscriptionController extends Controller
      */
     public function index()
     {
-        //
+       $myCourse=Auth::user()->courseStudent;
+        return response()->json($myCourse);
     }
 
     /**
@@ -29,7 +32,12 @@ class InscriptionController extends Controller
      */
     public function store(StoreinscriptionRequest $request)
     {
-        //
+        $user=Auth::user()->id;
+        $validteCourse=$request->validated();
+        $validteCourse['utilisateur_id']=$user;
+        $course=inscription::create($validteCourse);
+        return response()->json($course);
+
     }
 
     /**

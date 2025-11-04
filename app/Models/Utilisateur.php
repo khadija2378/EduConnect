@@ -25,9 +25,11 @@ class Utilisateur extends Authenticatable
      public function courses(){
        return $this->hasMany(Course::class,'teacher_id');
      }
-    // public function inscription(){
+     
+     public function courseStudent(){
+       return $this->belongsToMany(Course::class,'inscriptions', 'utilisateur_id', 'cours_id');
+     }
 
-    // }
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);

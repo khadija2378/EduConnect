@@ -47,11 +47,11 @@ class UtilisateurController extends Controller
                                'User'=>$user,
                                'token'=>$token], 201);
     }
-    // public function logout(Request $request){
-    //    $request->user()->currentAccessToken()->delete();
-    //     return response()->json(['messege'=>'logout is valide']);
+     public function logout(){
+        Auth::user()->currentAccessToken()->delete();
+         return response()->json(['messege'=>'Logout successful']);
 
-    // }
+     }
 
     /**
      * Display the specified resource.

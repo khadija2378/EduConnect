@@ -16,4 +16,8 @@ protected $fillable = [
     public function utilisateur() {
     return $this->belongsTo(Utilisateur::class,'teacher_id');
 }
+    
+    public function students(){
+        return $this->belongsToMany(Utilisateur::class, 'inscriptions', 'cours_id','utilisateur_id');
+    }
 }
