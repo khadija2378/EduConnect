@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Utilisateur;
 use App\Http\Requests\StoreutilisateurRequest;
 use App\Http\Requests\UpdateutilisateurRequest;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +17,7 @@ class UtilisateurController extends Controller
     public function index()
     {
         $user=Utilisateur::all();
-        return response()->json($user);
+        return UserResource::collection($user);
     }
 
     /**
@@ -39,13 +40,14 @@ class UtilisateurController extends Controller
     {
        $request->validated();
        if (!Auth::attempt($request->only('email', 'password'))) {
-        return response()->json(['message' => 'Invalid email or password'], 401);
+        return response()->json(['message' => 'Invalid email or password']);
     }
     $user=Utilisateur::where('email', $request->email)->first();
     $token=$user->createToken('auth_token')->plainTextToken;
+
      return response()->json(['message'=>'login is valide',
                                'User'=>$user,
-                               'token'=>$token], 201);
+                               'token'=>$token]);
     }
      public function logout(){
         Auth::user()->currentAccessToken()->delete();

@@ -15,7 +15,7 @@ class CourseController extends Controller
     public function index()
     {
         $course=Auth::user()->courses;
-         
+
         return response()->json($course);
     }
 
@@ -60,7 +60,9 @@ class CourseController extends Controller
      */
     public function update(UpdateCourseRequest $request, Course $course)
     {
-        //
+      $couseUpdate= $course->update($request->validated());
+      return response()->json($couseUpdate);
+
     }
 
     /**
@@ -68,6 +70,8 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //
+      $course->delete();
+
+    return response()->json(['message' => 'Course deleted successfully']);
     }
 }

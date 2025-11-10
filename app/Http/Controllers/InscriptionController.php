@@ -61,7 +61,7 @@ class InscriptionController extends Controller
      */
     public function update(UpdateinscriptionRequest $request, inscription $inscription)
     {
-        //
+        
     }
 
     /**

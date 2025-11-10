@@ -24,8 +24,8 @@ class StoreutilisateurRequest extends FormRequest
         return [
             'name'=>'min:3',
             'email'=>'required|email',
-            'password'=>'required',
-            'role'=>'string',
+            'password'=>'required|min:4',
+            'role'=>'in:admin,teacher,student',
         ];
     }
 }
